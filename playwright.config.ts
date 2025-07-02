@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "./tests",
+  testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
@@ -27,6 +27,16 @@ export default defineConfig({
     navigationTimeout: 15000,
   },
   projects: [
+    {
+      name: "auth",
+      testMatch: "**/*global.setup.ts",
+      testDir: "tests/config",
+    },
+    {
+      name: "api",
+      testDir: "tests/api",
+      dependencies: ["auth"],
+    },
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
