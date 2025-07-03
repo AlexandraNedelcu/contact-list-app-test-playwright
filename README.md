@@ -14,7 +14,6 @@ It follows the **Page Object Model (POM)** structure, uses data-driven testing, 
  ┃ ┣ 📄 custom-fixtures.ts # Custom fixture for tests setup (eg. authentication, tokens)
  ┣ 📂 tests
  ┃ ┣ 📄 e2e/ # End-to-end scenarios
- ┃ ┃ ┣ 📄 regression/ # Regression test suite, full functionality run
  ┃ ┣ 📄 api/ # API tests
  ┃ ┣ 📄 utils/
  ┃ ┃ ┣ 📄 apiHelpers.ts # Helper functions for API tests
@@ -55,9 +54,6 @@ Run API tests only:
 Run E2E tests only:
 ```npx playwright test tests/e2e```
 
-Run regression tests only:
-```npx playwright test tests/regression```
-
 Open the report:
 ```npx playwright show-report```
 
@@ -65,7 +61,7 @@ Open the report:
 Located at: .github/workflows/playwright.yml
 
 Workflow Includes:
-- Runs on push or pull request to main
+- Runs on demand
 - Installs dependencies and browsers
 - Runs regression suite
 - Saves test artifacts: Screenshots, Videos, Traces (open with npx playwright show-trace)
