@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 
 export class ViewContactPage {
     readonly page: Page;
@@ -84,6 +84,10 @@ export class ViewContactPage {
         postalCode: await this.postalCode.textContent(),
         country: await this.country.textContent(),
         };
+    }
+
+    async waitForHydration() {
+        await expect(this.firstName).not.toHaveText('');
     }
 
     getContactFirstName(): Locator {

@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 
 export class EditContactPage {
   readonly page: Page;
@@ -61,6 +61,10 @@ export class EditContactPage {
 
   async modifyForm(field: any , value: string) {
     await field.fill(value);
+  }
+
+  async waitForHydration() {
+    await expect(this.firstNameInput).not.toHaveValue('');
   }
 
   getErrorMessage(): Locator {

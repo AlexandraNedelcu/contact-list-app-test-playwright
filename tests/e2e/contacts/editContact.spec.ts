@@ -19,19 +19,18 @@ test("@e2e Should edit contact first name", async ({
     loginPage,
     contactListPage,
     viewContactPage,
-    editContactPage,
-    page
+    editContactPage
 }) => {
     const { firstName } = generateRandomContact();
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickContactRow(0);
     await viewContactPage.clickOnButton('Edit');
-    await page.waitForTimeout(1000);
+    await editContactPage.waitForHydration();
     await editContactPage.modifyForm(editContactPage.firstNameInput, firstName);
     await editContactPage.clickOnButton('Submit');
-    await page.waitForTimeout(1000);
+    await viewContactPage.waitForHydration();
     await viewContactPage.clickOnButton('Return');
-    await page.waitForTimeout(1000);
+    await contactListPage.waitForHydration();
     const updated = await contactListPage.getContactRowData(0);
     expect(updated.firstName).toContain(firstName);
 });
@@ -40,14 +39,12 @@ test("@e2e Should show error for invalid email", async ({
     loginPage,
     contactListPage,
     viewContactPage,
-    editContactPage,
-    page 
+    editContactPage
 }) => {
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickContactRow(0);
-    await page.waitForTimeout(1000);
     await viewContactPage.clickOnButton('Edit');
-    await page.waitForTimeout(1000);
+    await editContactPage.waitForHydration();
     await editContactPage.modifyForm(editContactPage.emailInput, "wrongEmail");
     await editContactPage.clickOnButton('Submit');
     await expect(editContactPage.getErrorMessage()).toContainText(
@@ -59,14 +56,12 @@ test("@e2e Should show error for invalid phone number", async ({
     loginPage,
     contactListPage,
     viewContactPage,
-    editContactPage,
-    page 
+    editContactPage
 }) => {
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickContactRow(0);
-    await page.waitForTimeout(1000);
     await viewContactPage.clickOnButton('Edit');
-    await page.waitForTimeout(1000);
+    await editContactPage.waitForHydration();
     await editContactPage.modifyForm(editContactPage.phoneInput, "222");
     await editContactPage.clickOnButton('Submit');
     await expect(editContactPage.getErrorMessage()).toContainText(
@@ -78,14 +73,12 @@ test("@e2e Should show error for invalid postal code", async ({
     loginPage,
     contactListPage,
     viewContactPage,
-    editContactPage,
-    page 
+    editContactPage
 }) => {
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickContactRow(0);
-    await page.waitForTimeout(1000);
     await viewContactPage.clickOnButton('Edit');
-    await page.waitForTimeout(1000);
+    await editContactPage.waitForHydration();
     await editContactPage.modifyForm(editContactPage.postalCodeInput, "aaaa");
     await editContactPage.clickOnButton('Submit');
     await expect(editContactPage.getErrorMessage()).toContainText(
@@ -97,21 +90,18 @@ test("@e2e Should return to contact details when pressing cancel button without 
     loginPage,
     contactListPage,
     viewContactPage,
-    editContactPage,
-    page,
+    editContactPage
 }) => {
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickContactRow(0);
-    await page.waitForTimeout(1000);
     await viewContactPage.clickOnButton('Edit');
-    await page.waitForTimeout(1000);
+    await editContactPage.waitForHydration();
     const { firstName } = generateRandomContact();
     await editContactPage.modifyForm(editContactPage.firstNameInput, firstName);
     await editContactPage.clickOnButton('Cancel');
-    await expect(page).toHaveURL("/contactDetails");
-    await page.waitForTimeout(1000);
+    await viewContactPage.waitForHydration();
     await viewContactPage.clickOnButton('Return');
-    await page.waitForTimeout(1000);
+    await contactListPage.waitForHydration();
     const updated = await contactListPage.getContactRowData(0);
     expect(updated.firstName).not.toContain(firstName);
 });

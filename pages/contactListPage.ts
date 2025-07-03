@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class ContactListPage {
     readonly page: Page;
@@ -61,6 +61,14 @@ export class ContactListPage {
             postalCode,
             country: await columns.nth(7).textContent(),
         };
+    }
+
+    getContact(fullName: string): Locator {
+        return this.page.locator('#myTable').locator('td', { hasText: fullName })
+    }
+
+    async waitForHydration() {
+        await expect(this.contactsTableRows).not.toHaveCount(0);
     }
 
     async clickContactRow(rowIndex: number) {

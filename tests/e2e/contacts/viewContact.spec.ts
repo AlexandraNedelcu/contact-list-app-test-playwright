@@ -41,14 +41,13 @@ test("@e2e Should return to contact list from details", async ({
 test("@e2e Should delete a contact successfully", async ({ 
     loginPage,
     contactListPage,
-    viewContactPage,
-    page 
+    viewContactPage
 }) => {
     await loginPage.login(validUser.email, validUser.password);
     const initialData = await contactListPage.getContactRowData(0);
     await contactListPage.clickContactRow(0);
     await viewContactPage.deleteContact(true);
-    await page.waitForTimeout(1000);
+    await contactListPage.waitForHydration();
     const afterDelete = await contactListPage.getContactRowData(0);
     expect(afterDelete.firstName).not.toBe(initialData.firstName);
 });
@@ -56,15 +55,14 @@ test("@e2e Should delete a contact successfully", async ({
 test("@e2e Should cancel the delete of a contact", async ({ 
     loginPage,
     contactListPage,
-    viewContactPage,
-    page 
+    viewContactPage
 }) => {
     await loginPage.login(validUser.email, validUser.password);
     const initialData = await contactListPage.getContactRowData(0);
     await contactListPage.clickContactRow(0);
     await viewContactPage.deleteContact(false);
     await viewContactPage.clickOnButton('Return');
-    await page.waitForTimeout(1000);
+    await contactListPage.waitForHydration();
     const afterDelete = await contactListPage.getContactRowData(0);
     expect(afterDelete.firstName).toBe(initialData.firstName);
 });

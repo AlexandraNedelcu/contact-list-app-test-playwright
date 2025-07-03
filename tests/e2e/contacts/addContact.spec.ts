@@ -26,7 +26,7 @@ test("@e2e Should create a contact with first and last name only", async ({
     await addContactPage.clickOnButton('Submit');
     const fullName = `${firstName} ${lastName}`;
     await expect(
-        page.locator('#myTable').locator('td', { hasText: fullName })
+        contactListPage.getContact(fullName)
     ).toBeVisible();
 });
 
@@ -62,8 +62,10 @@ test("@e2e Should show error when first name is missing", async ({
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickOnButton('Add Contact');
     const contact = generateRandomContact();
-    contact.firstName = '';
-    await addContactPage.fillContactForm(contact);
+    await addContactPage.fillContactForm({
+        ...contact,
+        firstName: ''
+    });
     await addContactPage.clickOnButton('Submit');
     await expect(addContactPage.getErrorMessage()).toContainText(
         "`firstName` is required"
@@ -78,8 +80,10 @@ test("@e2e Should show error when last name is missing", async ({
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickOnButton('Add Contact');
     const contact = generateRandomContact();
-    contact.lastName = '';
-    await addContactPage.fillContactForm(contact);
+    await addContactPage.fillContactForm({
+        ...contact,
+        lastName: ''
+    });
     await addContactPage.clickOnButton('Submit');
     await expect(addContactPage.getErrorMessage()).toContainText(
         "`lastName` is required"
@@ -94,8 +98,10 @@ test("@e2e Should show error for invalid email format", async ({
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickOnButton('Add Contact');
     const contact = generateRandomContact();
-    contact.email = "wrong";
-    await addContactPage.fillContactForm(contact);
+    await addContactPage.fillContactForm({
+        ...contact,
+        email: 'wrong'
+    });
     await addContactPage.clickOnButton('Submit');
     await expect(addContactPage.getErrorMessage()).toContainText(
         "Email is invalid"
@@ -110,8 +116,10 @@ test("@e2e Should show error for invalid phone format", async ({
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickOnButton('Add Contact');
     const contact = generateRandomContact();
-    contact.phone = "777";
-    await addContactPage.fillContactForm(contact);
+    await addContactPage.fillContactForm({
+        ...contact,
+        phone: '777'
+    });
     await addContactPage.clickOnButton('Submit');
     await expect(addContactPage.getErrorMessage()).toContainText(
         "Phone number is invalid"
@@ -126,8 +134,10 @@ test("@e2e Should show error for invalid postal code format", async ({
     await loginPage.login(validUser.email, validUser.password);
     await contactListPage.clickOnButton('Add Contact');
     const contact = generateRandomContact();
-    contact.postalCode = "aaa";
-    await addContactPage.fillContactForm(contact);
+    await addContactPage.fillContactForm({
+        ...contact,
+        postalCode: 'aaa'
+    });
     await addContactPage.clickOnButton('Submit');
     await expect(addContactPage.getErrorMessage()).toContainText(
         "Postal code is invalid"
