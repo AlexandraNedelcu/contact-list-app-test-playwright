@@ -43,23 +43,27 @@ export class EditContactPage {
     await this.page.goto(this.url);
   }
 
-  async logout() {
-        await this.logoutButton.click();
-    }
+  async clickOnButton(buttonName: string): Promise<void> {
+      switch (buttonName) {
+      case "Submit":
+          await this.submitButton.click();
+          break;
+      case "Cancel":
+          await this.cancelButton.click();
+          break;
+      case "Logout":
+          await this.logoutButton.click();
+          break;
+      default:
+          throw new Error(`Button ${buttonName} not recognized`);
+      }
+  }
 
   async modifyForm(field: any , value: string) {
     await field.fill(value);
   }
 
-  async submit() {
-    await this.submitButton.click();
-  }
-
-  async cancel() {
-    await this.cancelButton.click();
-  }
-
-  async getErrorMessage() {
-    return this.errorMessage.textContent();
+  getErrorMessage(): Locator {
+    return this.errorMessage;
   }
 }

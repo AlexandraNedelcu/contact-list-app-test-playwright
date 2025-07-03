@@ -6,8 +6,6 @@ export class ContactListPage {
     readonly addContactButton: Locator;
     readonly contactsTableRows: Locator;
 
-    readonly url = '/contactList';
-
     constructor(page: Page) {
         this.page = page;
         this.logoutButton = page.locator('#logout');
@@ -16,21 +14,25 @@ export class ContactListPage {
     }
 
     async goto() {
-        await this.page.goto(this.url);
+        await this.page.goto("/contactList");
     }
 
-    async logout() {
-        await this.logoutButton.click();
-    }
-
-    async clickAddContact() {
-        await this.addContactButton.click();
+    async clickOnButton(buttonName: string): Promise<void> {
+        switch (buttonName) {
+        case "Add Contact":
+            await this.addContactButton.click();
+            break;
+        case "Logout":
+            await this.logoutButton.click();
+            break;
+        default:
+            throw new Error(`Button ${buttonName} not recognized`);
+        }
     }
 
     async isContactInTable(fullName: string): Promise<boolean> {
         return await this.page.locator('#myTable').locator('td', { hasText: fullName }).count() > 0;
     }
-
 
     async getContactRowData(rowIndex: number) {
         const row = this.contactsTableRows.nth(rowIndex);

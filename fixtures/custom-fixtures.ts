@@ -1,12 +1,20 @@
 import { test as baseTest, request as baseRequest } from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { RegisterPage } from "../pages/registerPage";
+import { AddContactPage  } from "../pages/addContactPage";
+import { ContactListPage } from "../pages/contactListPage";
+import { EditContactPage } from "../pages/editContactPage";
+import { ViewContactPage } from "../pages/viewContactPage";
 import fs from "fs";
 
 type MyFixtures = {
   authToken: string;
   loginPage: LoginPage;
   registerPage: RegisterPage;
+  addContactPage: AddContactPage;
+  contactListPage: ContactListPage;
+  editContactPage: EditContactPage;
+  viewContactPage: ViewContactPage;
   navigateToBaseUrl: void;
   request: typeof baseRequest;
 };
@@ -17,6 +25,18 @@ export const test = baseTest.extend<MyFixtures>({
   },
   registerPage: async ({ page }, use) => {
     await use(new RegisterPage(page));
+  },
+  addContactPage: async ({ page }, use) => {
+    await use(new AddContactPage(page));
+  },
+  contactListPage: async ({ page }, use) => {
+    await use(new ContactListPage(page));
+  },
+  editContactPage: async ({ page }, use) => {
+    await use(new EditContactPage(page));
+  },
+  viewContactPage: async ({ page }, use) => {
+    await use(new ViewContactPage(page));
   },
   navigateToBaseUrl: [
     async ({ page, baseURL }, use) => {

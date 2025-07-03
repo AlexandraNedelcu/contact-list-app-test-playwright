@@ -19,8 +19,6 @@ export class ViewContactPage {
     readonly postalCode: Locator;
     readonly country: Locator;
 
-    readonly url = '/contactDetails';
-
     constructor(page: Page) {
         this.page = page;
         this.logoutButton = page.locator('#logout');
@@ -42,19 +40,23 @@ export class ViewContactPage {
     }
 
     async goto() {
-        await this.page.goto(this.url);
+        await this.page.goto("/contactDetails");
     }
 
-    async logout() {
-        await this.logoutButton.click();
-    }
-
-    async returnToContactList() {
-        await this.returnButton.click();
-    }
-
-    async clickEdit() {
-        await this.editButton.click();
+    async clickOnButton(buttonName: string): Promise<void> {
+        switch (buttonName) {
+        case "Return":
+            await this.returnButton.click();
+            break;
+        case "Logout":
+            await this.logoutButton.click();
+            break;
+        case "Edit":
+            await this.editButton.click();
+            break;
+        default:
+            throw new Error(`Button ${buttonName} not recognized`);
+        }
     }
 
     async deleteContact(confirm: boolean = true) {
@@ -82,5 +84,9 @@ export class ViewContactPage {
         postalCode: await this.postalCode.textContent(),
         country: await this.country.textContent(),
         };
+    }
+
+    getContactFirstName(): Locator {
+        return this.firstName
     }
 }

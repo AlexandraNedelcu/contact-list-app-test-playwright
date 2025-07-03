@@ -17,7 +17,7 @@ export default defineConfig({
   ],
   use: {
     baseURL: "https://thinking-tester-contact-list.herokuapp.com",
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
     headless: true,

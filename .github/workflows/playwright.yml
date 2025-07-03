@@ -1,16 +1,12 @@
 name: Playwright Tests
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
-      runRegression:
-        description: 'Run regression tests only'
+      testType:
+        description: 'Choose test type to run: all, e2e, or api'
         required: false
-        default: 'false'
+        default: 'all'
 
 jobs:
   run-tests:
@@ -32,23 +28,32 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
+        id: run_tests
         run: |
-          if [[ "${{ github.event.inputs.runRegression }}" == "true" ]]; then
-            echo "Running regression tests only..."
-            npx playwright test --grep @regression
-          else
-            echo "Running full test suite..."
-            npx playwright test
-          fi
+          case "${{ github.event.inputs.testType }}" in
+            "e2e")
+              echo "Running only E2E tests on Chromium..."
+              npx playwright test --grep @e2e
+              ;;
+            "api")
+              echo "Running only API tests on Chromium..."
+              npx playwright test --grep @api
+              ;;
+            *)
+              echo "Running all tests on Chromium..."
+              npx playwright test
+              ;;
+          esac
 
-      - name: Upload HTML report
+      - name: Upload HTML report (on failure only)
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
           path: playwright-report
 
-      - name: Upload Trace + Video artifacts
-        if: always()
+      - name: Upload Trace + Video artifacts (on failure only)
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-traces-and-videos
