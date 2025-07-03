@@ -1,7 +1,7 @@
 import { test, expect } from "../../../fixtures/custom-fixtures";
 import { validUser, generateRandomContact } from "../../utils/testData";
 
-test("Should logout when pressing logout button - Edit Contact Page", async ({
+test("@e2e Should logout when pressing logout button - Edit Contact Page", async ({
     loginPage,
     contactListPage,
     viewContactPage,
@@ -15,7 +15,7 @@ test("Should logout when pressing logout button - Edit Contact Page", async ({
     await expect(page).toHaveURL("/");
 });
 
-test("Should edit contact first name", async ({ 
+test("@e2e Should edit contact first name", async ({ 
     loginPage,
     contactListPage,
     viewContactPage,
@@ -36,7 +36,7 @@ test("Should edit contact first name", async ({
     expect(updated.firstName).toContain(firstName);
 });
 
-test("Should show error for invalid email", async ({ 
+test("@e2e Should show error for invalid email", async ({ 
     loginPage,
     contactListPage,
     viewContactPage,
@@ -55,7 +55,7 @@ test("Should show error for invalid email", async ({
     );
 });
 
-test("Should show error for invalid phone number", async ({ 
+test("@e2e Should show error for invalid phone number", async ({ 
     loginPage,
     contactListPage,
     viewContactPage,
@@ -74,7 +74,7 @@ test("Should show error for invalid phone number", async ({
     );
 });
 
-test("Should show error for invalid postal code", async ({ 
+test("@e2e Should show error for invalid postal code", async ({ 
     loginPage,
     contactListPage,
     viewContactPage,
@@ -93,7 +93,7 @@ test("Should show error for invalid postal code", async ({
     );
 });
 
-test("Should return to contact details when pressing cancel button without saving", async ({
+test("@e2e Should return to contact details when pressing cancel button without saving", async ({
     loginPage,
     contactListPage,
     viewContactPage,

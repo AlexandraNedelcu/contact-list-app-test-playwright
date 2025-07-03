@@ -1,7 +1,7 @@
 import { test, expect } from "../../../fixtures/custom-fixtures";
 import { validUser, generateRandomUser } from "../../utils/testData";
 
-test("Should register successfully", async ({ registerPage, page }) => {
+test("@e2e Should register successfully", async ({ registerPage, page }) => {
   const user = generateRandomUser();
   await page.goto("/addUser");
   await registerPage.register({
@@ -13,7 +13,7 @@ test("Should register successfully", async ({ registerPage, page }) => {
   await expect(page).toHaveURL("/contactList");
 });
 
-test("Should show error when fields are empty", async ({
+test("@e2e Should show error when fields are empty", async ({
   registerPage,
   page,
 }) => {
@@ -24,7 +24,7 @@ test("Should show error when fields are empty", async ({
   );
 });
 
-test("Should show error for already registered email", async ({
+test("@e2e Should show error for already registered email", async ({
   registerPage,
   page,
 }) => {
@@ -41,7 +41,7 @@ test("Should show error for already registered email", async ({
   );
 });
 
-test("Should show error for invalid email format", async ({
+test("@e2e Should show error for invalid email format", async ({
   registerPage,
   page,
 }) => {
@@ -58,7 +58,7 @@ test("Should show error for invalid email format", async ({
   );
 });
 
-test("Should show error for short password", async ({ registerPage, page }) => {
+test("@e2e Should show error for short password", async ({ registerPage, page }) => {
   const user = generateRandomUser();
   await page.goto("/addUser");
   await registerPage.register({

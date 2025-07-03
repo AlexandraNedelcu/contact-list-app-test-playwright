@@ -1,7 +1,7 @@
 import { test, expect } from "../../../fixtures/custom-fixtures";
 import { validUser } from "../../utils/testData";
 
-test("Should logout when pressing logout button - View Contact Page", async ({
+test("@e2e Should logout when pressing logout button - View Contact Page", async ({
     loginPage,
     contactListPage,
     viewContactPage,
@@ -13,7 +13,7 @@ test("Should logout when pressing logout button - View Contact Page", async ({
     await expect(page).toHaveURL("/");
 });
 
-test("Should view contact details", async ({ 
+test("@e2e Should view contact details", async ({ 
     loginPage,
     contactListPage,
     viewContactPage
@@ -26,7 +26,7 @@ test("Should view contact details", async ({
     );
 });
 
-test("Should return to contact list from details", async ({ 
+test("@e2e Should return to contact list from details", async ({ 
     loginPage,
     contactListPage,
     viewContactPage,
@@ -38,7 +38,7 @@ test("Should return to contact list from details", async ({
     await expect(page).toHaveURL("/contactList");
 });
 
-test("Should delete a contact successfully", async ({ 
+test("@e2e Should delete a contact successfully", async ({ 
     loginPage,
     contactListPage,
     viewContactPage,
@@ -53,7 +53,7 @@ test("Should delete a contact successfully", async ({
     expect(afterDelete.firstName).not.toBe(initialData.firstName);
 });
 
-test("Should cancel the delete of a contact", async ({ 
+test("@e2e Should cancel the delete of a contact", async ({ 
     loginPage,
     contactListPage,
     viewContactPage,

@@ -1,7 +1,7 @@
 import { test, expect } from "../../../fixtures/custom-fixtures";
 import { validUser, generateRandomContact } from "../../utils/testData";
 
-test("Should create a contact with first and last name only", async ({
+test("@e2e Should create a contact with first and last name only", async ({
     loginPage,
     contactListPage,
     addContactPage,
@@ -30,7 +30,7 @@ test("Should create a contact with first and last name only", async ({
     ).toBeVisible();
 });
 
-test("Should logout when pressing logout button - Add Contact Page", async ({
+test("@e2e Should logout when pressing logout button - Add Contact Page", async ({
     loginPage,
     contactListPage,
     addContactPage,
@@ -42,7 +42,7 @@ test("Should logout when pressing logout button - Add Contact Page", async ({
     await expect(page).toHaveURL("/");
 });
 
-test("Should return to contacts list when pressing cancel button", async ({
+test("@e2e Should return to contacts list when pressing cancel button", async ({
     loginPage,
     contactListPage,
     addContactPage,
@@ -54,7 +54,7 @@ test("Should return to contacts list when pressing cancel button", async ({
     await expect(page).toHaveURL("/contactList");
 });
 
-test("Should show error when first name is missing", async ({ 
+test("@e2e Should show error when first name is missing", async ({ 
     loginPage,
     contactListPage,
     addContactPage
@@ -70,7 +70,7 @@ test("Should show error when first name is missing", async ({
     );
 });
 
-test("Should show error when last name is missing", async ({ 
+test("@e2e Should show error when last name is missing", async ({ 
     loginPage,
     contactListPage,
     addContactPage
@@ -86,7 +86,7 @@ test("Should show error when last name is missing", async ({
     );
 });
 
-test("Should show error for invalid email format", async ({ 
+test("@e2e Should show error for invalid email format", async ({ 
     loginPage,
     contactListPage,
     addContactPage
@@ -102,7 +102,7 @@ test("Should show error for invalid email format", async ({
     );
 });
 
-test("Should show error for invalid phone format", async ({ 
+test("@e2e Should show error for invalid phone format", async ({ 
     loginPage,
     contactListPage,
     addContactPage
@@ -118,7 +118,7 @@ test("Should show error for invalid phone format", async ({
     );
 });
 
-test("Should show error for invalid postal code format", async ({ 
+test("@e2e Should show error for invalid postal code format", async ({ 
     loginPage,
     contactListPage,
     addContactPage
