@@ -1,4 +1,4 @@
-import { test as baseTest, request as baseRequest } from "@playwright/test";
+import { test as baseTest, request as baseRequest, APIRequestContext } from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { RegisterPage } from "../pages/registerPage";
 import { AddContactPage  } from "../pages/addContactPage";
@@ -63,5 +63,14 @@ export const test = baseTest.extend<MyFixtures>({
     await apiRequest.dispose();
   },
 });
+
+export async function getFirstContactId(request: APIRequestContext): Promise<string> {
+  const listResponse = await request.get("/contacts");
+  if (!listResponse.ok()) throw new Error("Failed to fetch contact list");
+  const contacts = await listResponse.json();
+  const contactId = contacts[0]?._id;
+  if (!contactId) throw new Error("No contacts found in the list");
+  return contactId;
+}
 
 export { expect } from "@playwright/test";

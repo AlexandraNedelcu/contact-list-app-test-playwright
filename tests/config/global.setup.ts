@@ -1,13 +1,17 @@
 import { test as setup } from "@playwright/test";
+import { expect } from "../../fixtures/custom-fixtures";
 import { LoginPage } from "../../pages/loginPage";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 setup("get cookies", async ({ page }) => {
-  const loginpage = new LoginPage(page);
+  const loginPage = new LoginPage(page);
   await page.goto("/");
-  await loginpage.login(
+  await loginPage.login(
     process.env.TEST_USER_EMAIL as string,
     process.env.TEST_USER_PASSWORD as string
   );
-  await page.waitForURL("**/contactList");
+  await expect(page).toHaveURL("/contactList");
   await page.context().storageState({ path: ".auth/cookies.json" });
 });
