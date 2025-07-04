@@ -16,7 +16,6 @@ It follows the **Page Object Model (POM)** structure, uses data-driven testing, 
  ┃ ┣ 📄 e2e/ # End-to-end scenarios
  ┃ ┣ 📄 api/ # API tests
  ┃ ┣ 📄 utils/
- ┃ ┃ ┣ 📄 apiHelpers.ts # Helper functions for API tests
  ┃ ┃ ┣ 📄 testData.ts # Predefined test data
  ┣ 📄 playwright.config.ts # Global Playwright configuration
  ┣ 📄 package.json
